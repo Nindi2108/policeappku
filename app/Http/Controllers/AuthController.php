@@ -77,7 +77,7 @@ class AuthController extends Controller
                 'user'  => $user,
                 'token' => $token
             ],
-        ], 200);
+        ], 200)->withCookie(cookie('token', $token,60, null, null, true,false));
 
     }
 
@@ -110,4 +110,6 @@ class AuthController extends Controller
     {
         return view('register');
     }
+
+
 }
