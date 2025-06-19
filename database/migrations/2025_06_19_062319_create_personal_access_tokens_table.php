@@ -7,24 +7,27 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
-        Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
-            $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
-            $table->timestamps();
-        });
+        // Cegah error duplikat jika tabel sudah ada
+        if (!Schema::hasTable('personal_access_tokens')) {
+            Schema::create('personal_access_tokens', function (Blueprint $table) {
+                $table->id(); // Primary key
+                $table->morphs('tokenable'); // Kolom tokenable_type & tokenable_id
+                $table->string('name'); // Nama token (misal: "Token Login Mobile")
+                $table->string('token', 64)->unique(); // Token unik yang dipakai user
+                $table->text('abilities')->nullable(); // Hak akses (bisa null)
+                $table->timestamp('last_used_at')->nullable(); // Terakhir dipakai
+                $table->timestamp('expires_at')->nullable(); // Jika token punya masa kedaluwarsa
+                $table->timestamps(); // created_at & updated_at
+            });
+        }
     }
 
     /**
-     * Reverse the migrations.
+     * 
      */
     public function down(): void
     {
