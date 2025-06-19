@@ -6,8 +6,8 @@ use App\Http\Controllers\VehiclesController;
 use App\Http\Controllers\OfficerController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
-Route::get('/register', [AuthController::class, 'registerPage']);
+Route::get ('/', [AuthController::class, 'index'])->name('login');
+Route::get ('/register', [AuthController::class, 'registerPage']);
 
 Route::group(['prefix' => 'panel-control'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
